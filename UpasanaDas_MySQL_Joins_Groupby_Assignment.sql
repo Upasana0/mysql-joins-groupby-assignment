@@ -1,3 +1,53 @@
+DROP TABLE IF EXISTS order_items;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS customers;
+
+CREATE TABLE customers (
+    customer_id TEXT PRIMARY KEY,
+    name TEXT,
+    city TEXT
+);
+
+CREATE TABLE orders (
+    order_id TEXT PRIMARY KEY,
+    customer_id TEXT,
+    order_date TEXT,
+    total_amount INTEGER,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE order_items (
+    item_id TEXT PRIMARY KEY,
+    order_id TEXT,
+    product_name TEXT,
+    quantity INTEGER,
+    price INTEGER,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+INSERT INTO customers VALUES
+('C001', 'Amit', 'Mumbai'),
+('C002', 'Riya', 'Delhi'),
+('C003', 'Kabir', 'Chennai'),
+('C004', 'Ananya', 'Kolkata'),
+('C005', 'John', 'Mumbai');
+
+INSERT INTO orders VALUES
+('O001', 'C001', '2023-06-01', 1500),
+('O002', 'C003', '2023-06-02', 900),
+('O003', 'C002', '2023-06-05', 1800),
+('O004', 'C001', '2023-06-08', 700),
+('O005', 'C004', '2023-06-08', 2200);
+
+INSERT INTO order_items VALUES
+('I001', 'O001', 'Soap', 3, 50),
+('I002', 'O001', 'Shampoo', 2, 200),
+('I003', 'O002', 'Toothpaste', 1, 120),
+('I004', 'O003', 'Soap', 4, 50),
+('I005', 'O003', 'Facewash', 1, 180),
+('I006', 'O004', 'Shampoo', 1, 200),
+('I007', 'O005', 'Cream', 2, 300);
+
 -- Q1
 SELECT c.name, o.order_id
 FROM customers c
